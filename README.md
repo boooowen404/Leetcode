@@ -9,5 +9,5 @@
 
 ### 简单：
 
-* [0001 两数之和 two sum](https://github.com/boooowen404/Leetcode-/blob/master/%E9%9A%BE%E5%BA%A6/%E7%AE%80%E5%8D%95/1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ctwo%20sum.md)
+* [0001 两数之和 two sum](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E7%AE%80%E5%8D%95/0001%20%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%20two%20sum.md)
 
