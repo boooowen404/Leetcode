@@ -1,5 +1,6 @@
-我的代码：
-（暴力解法）
+## 我的代码：
+* 暴力解法：
+'''
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -17,3 +18,4 @@ public:
         return res;
     }
 };
+'''
