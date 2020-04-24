@@ -1,5 +1,5 @@
 # 题目地址：
-https://leetcode-cn.com/problems/two-sum/submissions/
+https://leetcode-cn.com/problems/two-sum/
 ## 我的代码：
 #### 暴力解法：
 ```C++
