@@ -1,0 +1,66 @@
+# 题目地址：
+https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/
+## 代码：
+### 1.暴力解法：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+         ListNode* p = head;
+         ListNode* q = head;
+         int lenth = 0;
+         while(p!=NULL){
+             p=p->next;
+             lenth++;
+         }
+         for(int i = 1; i<lenth-k+1; i++)
+         {
+            q = q->next;
+         }
+         return q;
+    }
+};
+```
+#### 思路：
+最容易的思路，就是先遍历一遍链表取得链表长度，然后再算出来倒数第k个是正数第几个，再正着遍历
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+### 2.快慢指针：
+```C++
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+         ListNode* fast = head;
+         ListNode* slow = head;
+         for(int i=0; i<k; i++){
+             fast = fast->next;
+         }
+         while(fast!=NULL) {
+             fast = fast->next;
+             slow = slow->next;
+         }
+         return slow;
+    }
+};
+```
+#### 思路：
+快指针先走K步，然后快慢一起走，这样快指针到空节点时慢指针刚好到倒数第K个节点，又是一个骚操作
+如果要删除这个节点，再存储一个pre指针即可，需要手动释放删除掉节点的内存
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+
+## 总结：
+1、快慢指针不光能一个走的快一个走的慢，还能一个先走一个后走
