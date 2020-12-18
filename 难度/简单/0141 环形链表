@@ -1,0 +1,53 @@
+# 题目地址：
+https://leetcode-cn.com/problems/linked-list-cycle/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL or head->next == NULL) return false;
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast!=NULL and fast->next!= NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+};
+```
+#### 思路：
+如果存在环，那么快指针一定会追上慢指针，因为进入环后快慢指针每一次迭代距离都减少1
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+### 2.鬼才思路：
+```C++
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL or head->next == NULL) return false;
+        int num = 0;
+        while(head->next!=NULL){
+            if(num++>10000) return true;
+            head = head->next;
+        }
+        return false;
+    }
+};
+```
+#### 思路：
+题目中给定链表节点的数量小于10000，所以如果迭代次数超过10000，那就一定存在环，在评论里看到这个笑死我了，真是个小机灵鬼,试了一下还真能过
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
+
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+## 总结：
+1、快慢指针还可以用来寻找链表的中间节点，在已排序的数组中也经常能用到
+
