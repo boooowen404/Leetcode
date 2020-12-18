@@ -1,0 +1,59 @@
+# 题目地址：
+https://leetcode-cn.com/problems/reverse-linked-list/
+## 代码：
+### 1.操作指针就完事了：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL or head->next==NULL) return head;
+        ListNode* p = head;
+        ListNode* pre = NULL;
+        ListNode* next = NULL;
+        while(p!=NULL)
+        {
+           next = p->next;
+           p->next = pre;
+           pre = p;
+           p = next;
+        }
+        return pre;
+    }
+};
+```
+#### 思路：
+画图真是分析链表的不二选择，问题的关键在于在操作链表指针时必须存下上一个和下一个节点的指针，否则会丢失，所以用一个pre和一个next指针，再理一下顺序就好了
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+#### 优化：
+```C++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int len=nums.size();
+        for(int i=0;i<len-1;i++) for(int j=i+1;j<len;j++)
+        {
+            if(nums[i]+nums[j] == target)
+            return {i,j};
+        }
+       return {};
+    }
+};
+```
+
+
+## 总结：
+1、遇到链表就画图，举例，注意边界，即链表节点为0、1、2的情况
+2、链表是非线性表，即空间不连续，因此对CPU缓存不友好，因为CPU在从内存取数值到缓存（为了解决CPU运行快而读取内存慢的问题）时不是取一个数值的大小，而是取一块内存，因此数组可以完美契合这个特点
+3、链表适合插入、删除O(1)操作较多、或需要动态扩容的情况，而数组适合使用下标查找
+4、链表可以轻松实现LRU（最近最少使用）缓存机制，除此之外，缓存机制还有FIFO（先入先出）
+
