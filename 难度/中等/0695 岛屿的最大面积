@@ -1,0 +1,49 @@
+# 题目地址：
+https://leetcode-cn.com/problems/max-area-of-island/
+## 代码：
+### 1.DFS：
+```C++
+class Solution {
+    bool inArea(const vector<vector<int>>& grid, int r, int c){
+        return r>=0&&c>=0&&r<grid.size()&&c<grid[0].size();
+    }
+    int dbf(vector<vector<int>>& grid, int r, int c){
+        if(!inArea(grid,r,c)) return 0;
+        if(grid[r][c]!=1) return 0;
+        grid[r][c] = 2;
+        return 1 + dbf(grid, r+1,c)+dbf(grid,r-1,c)+dbf(grid,r,c+1)+dbf(grid,r,c-1);
+    }
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int res = 0;
+        for(int r = 0;r<grid.size(); r++){
+            for(int c = 0; c<grid[0].size();c++){
+                if(grid[r][c]==1){
+                    int a = dbf(grid, r, c);
+                    res = res>a?res:a;
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+无非就是多了个比较最大面积
+#### 复杂度分析：
+- 时间复杂度: O(MN)
+- 空间复杂度: O(1)
+
+
+
+## 总结：
+1、判断的时候注意是char
+
+## 拓展： 
+1、岛屿周长：
+[0463岛屿周长](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+2、岛屿最大面积：
+[0695岛屿最大面积](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+3、最大人工岛屿：
+[0827最大人工岛屿](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+
