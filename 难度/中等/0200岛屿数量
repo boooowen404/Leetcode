@@ -1,0 +1,55 @@
+# 题目地址：
+https://leetcode-cn.com/problems/number-of-islands/
+## 代码：
+### 1.DFS：
+```C++
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int res = 0;
+        for(int r = 0; r<grid.size(); r++){
+            for(int c = 0; c<grid[0].size(); c++){
+                if(grid[r][c] == '1'){
+                    res++;
+                    dbf(grid, r, c);
+                }
+            }
+        }
+        return res;
+    }
+    void dbf(vector<vector<char>>& grid, int r, int c){
+        if(!inArea(grid,r,c)) return;
+        if(grid[r][c]!='1') return;
+        grid[r][c] = '2';
+        dbf(grid,r+1,c);
+        dbf(grid,r-1,c);
+        dbf(grid,r, c+1);
+        dbf(grid,r, c-1);
+        return;
+    }
+    bool inArea(const vector<vector<char>>& grid, const int r, const int c)
+    {
+        return r>=0 && c>= 0 && r<grid.size() && c<grid[0].size();
+    }
+};
+```
+#### 思路：
+网格型DFS，很多题解用了陆沉，也就是把1变成0，其实没必要，习惯性这样可能会在扩展该题时出错
+这题的题解里有一个DFS岛屿解体框架，写的非常好，我这里的所有岛屿题都是使用了这个DFS框架
+#### 复杂度分析：
+- 时间复杂度: O(MN)
+- 空间复杂度: O(1)
+
+
+
+## 总结：
+1、判断的时候注意是char
+
+## 拓展： 
+1、岛屿周长：
+[0463岛屿周长](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+2、岛屿最大面积：
+[0695岛屿最大面积](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+3、最大人工岛屿：
+[0827最大人工岛屿](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0015%20%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C%203sum.md)
+
