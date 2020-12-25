@@ -1,0 +1,76 @@
+# 题目地址：
+https://leetcode-cn.com/problems/making-a-large-island/
+## 代码：
+### 1.DFS：
+```C++
+class Solution {
+    bool inArea(const vector<vector<int>>& grid,int r, int c){
+        return r>=0&&c>=0&&r<grid.size()&&c<grid[0].size();
+    }
+    int dbf(vector<vector<int>>& grid,int r, int c,int count){
+        if(!inArea(grid,r,c)) return 0;
+        if(grid[r][c]!=1) return 0;
+        grid[r][c] = count;
+        return 1+dbf(grid,r+1,c,count)+dbf(grid,r-1,c,count)+dbf(grid,r,c+1,count)+dbf(grid,r,c-1,count);
+    }
+public:
+     vector<int> nr = {-1,1, 0,0};
+     vector<int> nc = { 0,0,-1,1};
+    int largestIsland(vector<vector<int>>& grid) {
+        int res = 0;
+        int count = 2;
+        unordered_map<int,int> mp;
+        mp.insert(make_pair(0,0));
+        for(int r = 0; r<grid.size();r++){
+            for(int c = 0; c<grid[0].size(); c++){
+                if(grid[r][c]==1){
+                    int area = dbf(grid, r, c, count);
+                    mp.insert(make_pair(count, area));
+                    count++;
+                    res = res>area?res:area;
+                }
+            }
+        }
+        if(res == 0) return 1;
+        for(int r = 0; r<grid.size();r++){
+            for(int c = 0; c<grid[0].size(); c++){
+                if(grid[r][c]==0){
+                    unordered_set<int> visted;
+                    int area = 0;
+                    for(int i = 0;i<4;i++){
+                        if(inArea(grid,r+nr[i],c+nc[i])){
+                            if(visted.find(grid[r+nr[i]][c+nc[i]])==visted.end()){
+                                visted.insert(grid[r+nr[i]][c+nc[i]]);
+                                area+=mp[grid[r+nr[i]][c+nc[i]]];
+                            }
+                        }
+                    }
+                    res=res>area?res:area;
+                }
+            }
+        }
+        if(res==grid.size()*grid[0].size()) return res;
+        return res+1;
+    }
+};
+```
+#### 思路：
+问题的关键在于用下标填充原来的1，再用一个map存储岛屿面积，最后通过set判断周边的四个地区是否有重复的，思路并不难，就是稍微有点复杂
+#### 复杂度分析：
+- 时间复杂度: O(MN)
+- 空间复杂度: O(1)
+
+
+
+## 总结：
+1、最后的时候需要判断下是否全1，这时候没法填充
+2、中间要判断一下是否全0，这时候应该直接返回1
+
+## 拓展： 
+1、岛屿周长：
+[0463岛屿周长](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E7%AE%80%E5%8D%95/0463%20%E5%B2%9B%E5%B1%BF%E5%91%A8%E9%95%BF)
+2、岛屿最大面积：
+[0695岛屿最大面积](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0695%20%E5%B2%9B%E5%B1%BF%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9D%A2%E7%A7%AF)
+3、岛屿数量：
+[0200岛屿数量](https://github.com/boooowen404/Leetcode/blob/master/%E9%9A%BE%E5%BA%A6/%E4%B8%AD%E7%AD%89/0200%E5%B2%9B%E5%B1%BF%E6%95%B0%E9%87%8F)
+
