@@ -1,0 +1,55 @@
+# 题目地址：
+https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+## 代码：
+### 1.BFS：
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if(root==NULL) return res;
+        queue<TreeNode*> tree;
+        tree.push(root);
+        vector<int> level;
+        int levellength = 0;
+        bool levelempty = true;
+        while(!tree.empty()){
+            if(levelempty==true){
+                levellength = tree.size();
+                levelempty = false;
+            }
+            TreeNode* node = tree.front();
+            tree.pop();
+            levellength--;
+            level.push_back(node->val);
+            if(levellength==0){
+                res.push_back(level);
+                level.clear();
+                levelempty = true;
+            } 
+            if(node->left!=NULL) tree.push(node->left);
+            if(node->right!=NULL) tree.push(node->right);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+使用队列来得到层序的节点顺序，难点在于如何区分每一层，我这里的做饭是使用了两个临时变量，记录每层队列的长度和这层队列是否已经取完，这样不用每次用一个临时队列，缩小了空间复杂度
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+
+
+## 总结：
+1、BFS的简单用法，BFS的核心就是队列
