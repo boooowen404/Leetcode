@@ -1,0 +1,29 @@
+# 题目地址：
+https://leetcode-cn.com/problems/maximum-subarray/
+## 代码：
+### 1.动态规划：
+```C++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if(nums.size()<=0) return 0;
+        int sum = nums[0];
+        int res = sum;
+        for(int i =1; i<nums.size(); i++){
+            if(sum>0){
+                sum+=nums[i];
+            }
+            else{
+                sum=nums[i];
+            }
+            res = max(res,sum);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+用sum表示子序和，res表示最大子序和，从第一个数开始累加，累加小于零时证明前面的序列对最大值没有贡献，直接舍去，否则就加上，我还傻傻的写了一个双循环超时了，想到DP又写了一个二维数组。。。
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
