@@ -1,0 +1,49 @@
+# 题目地址：
+https://leetcode-cn.com/problems/binode-lcci/submissions/
+## 代码：
+### 1.中序遍历：
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* head = NULL;
+    TreeNode* prev = NULL;
+    void ldr(TreeNode* root){
+        if(root==NULL) return;
+        ldr(root->left);
+        if(prev==NULL){
+            prev = root;
+            head = root;
+        }
+        else{
+            prev->right = root;
+            root->left = NULL;
+            prev = root;
+        }
+        ldr(root->right);
+        return;
+    }
+    TreeNode* convertBiNode(TreeNode* root) {
+        if(!root) return root;
+        ldr(root);
+        return head;
+    }
+};
+```
+#### 思路：
+二叉搜索树的中序遍历可以得到从小到大的排列，在中序遍历的过程中改变其左右指针的指向即可，为了记录上一个节点，需要一个额外的prev指针
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、递归的过程也能拿出来，递归到的当前节点其实就是要操作的那个节点，乍一看有点绕，想明白就好了，需要深刻理解递归的意思
+
