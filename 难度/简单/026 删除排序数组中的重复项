@@ -1,0 +1,28 @@
+# 题目地址：
+https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/
+## 代码：
+### 1.双指针：
+```C++
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.size()<=1) return nums.size();
+        int i,j;
+        i=j=0;
+        while(j!=nums.size()){
+            if(nums[i]==nums[j]) j++;
+            else{
+                i++;
+                nums[i]=nums[j];
+                j++;
+            }
+        }
+        return i+1;
+    }
+};
+```
+#### 思路：
+真是优雅的双指针啊，一个快一个慢，其实就其本质特征来说是一个读指针一个写指针，遇到不一样的就更新写指针然后往里写，遇到一样的就更新读指针接着往后读，这道题划成简单有点低估了
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
