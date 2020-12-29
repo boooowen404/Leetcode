@@ -1,0 +1,47 @@
+# 题目地址：
+https://leetcode-cn.com/problems/factorial-trailing-zeroes/
+## 代码：
+### 1.迭代：
+```C++
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int res = 0;
+        while(n>=1){
+            int m = n;
+            while(m%5==0){
+                res++;
+                m/=5;
+            }
+            n--;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+首先想到有0肯定是有一对2和5的因子，然后可以发现2一定比5多，所以求有多少个5的因子即可
+#### 复杂度分析：
+- 时间复杂度: O(logN)
+- 空间复杂度: O(1)
+### 优化：
+```C++
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int res = 0;
+        while(n>0){
+            res+=n/5;
+            n/=5;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+直接除就相当于把n约到5的倍数了，可以5步一起跳，所以直接除以5
+
+#### 复杂度分析：
+- 时间复杂度: O(logN)
+- 空间复杂度: O(N)
+
