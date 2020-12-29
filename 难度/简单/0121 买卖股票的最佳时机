@@ -1,0 +1,28 @@
+# 题目地址：
+https://leetcode-cn.com/problems/linked-list-cycle/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int minprice = INT_MAX;
+        int res = 0;
+        for(auto i:prices){
+            minprice = min(minprice,i);
+            res = max(res, i-minprice);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+维护一个最小价格，和一个最大利润，数组是向前遍历的，实时更新最小价格和最大理论即可
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+
+## 总结：
+1、其实本质是DP
+
