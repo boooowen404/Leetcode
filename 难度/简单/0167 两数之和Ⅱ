@@ -1,0 +1,29 @@
+# 题目地址：
+https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        if(numbers.size()<=1) return {};
+        int p1 = 0;
+        int p2 = numbers.size()-1;
+        while(p1!=p2){
+            if(numbers[p1]<target-numbers[p2]){
+                p1++;
+            }
+            else if(numbers[p1]>target-numbers[p2]){
+                p2--;
+            }
+            else return {p1+1,p2+1};
+        }
+        return {};
+    }
+};
+```
+#### 思路：
+两数之和典型用法
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
