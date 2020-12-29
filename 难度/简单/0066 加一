@@ -1,0 +1,28 @@
+# 题目地址：
+https://leetcode-cn.com/problems/plus-one/submissions/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        if(digits.empty()) return digits;
+        for(int i = digits.size()-1;i>=0;i--){
+            if(digits[i]!=9){
+                digits[i]++;
+                return digits;
+            }
+            else{
+                digits[i]=0;
+            }
+        }
+        digits.insert(digits.begin(),1);
+        return digits;
+    }
+};
+```
+#### 思路：
+就是遇9进位，没啥好说的。。STL万岁，0ms击败100%
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
