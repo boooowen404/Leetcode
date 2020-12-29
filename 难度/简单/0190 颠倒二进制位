@@ -1,0 +1,44 @@
+# 题目地址：
+https://leetcode-cn.com/problems/reverse-bits/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t res = 0;
+        int i = 0;
+        while(n!=0){
+            if(n&1==1) res+=pow(2,31-i);
+            n=n>>1;
+            i++;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+位运算，和1与运算看最右边一位是否为1
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
+### 改进：
+```C++
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t res = 0;
+        int i = 31;
+        while(n!=0){
+            res+=(n&1)<<i--;
+            n=n>>1;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+可以把加运算也改为位运算
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
