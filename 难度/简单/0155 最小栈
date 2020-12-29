@@ -1,0 +1,48 @@
+# 题目地址：
+https://leetcode-cn.com/problems/min-stack/
+## 代码：
+### 1.辅助栈：
+```C++
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+        
+    }
+    
+    void push(int x) {
+        nums.push(x);
+        if(mins.empty()) mins.push(x);
+        else{
+            mins.push(min(x,mins.top()));
+        }
+    }
+    
+    void pop() {
+        nums.pop();
+        mins.pop();
+    }
+    
+    int top() {
+        return nums.top();
+    }
+    
+    int getMin() {
+        return mins.top();
+    }
+
+     stack<int> nums;
+     stack<int> mins;
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+```
+#### 思路：
+这题考察栈的基本操作，用一个辅助栈存储当前栈的最小值即可
