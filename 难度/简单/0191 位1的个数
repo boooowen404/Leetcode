@@ -1,0 +1,22 @@
+# 题目地址：
+https://leetcode-cn.com/problems/number-of-1-bits/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int res = 0;
+        while(n!=0){
+            res++;
+            n=n&(n-1);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+n&(n-1)将n最右边的1置为0
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
