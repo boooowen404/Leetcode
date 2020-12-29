@@ -1,0 +1,48 @@
+# 题目地址：
+https://leetcode-cn.com/problems/merge-sorted-array/
+## 代码：
+### 1.STL：
+```C++
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        for(int i = 0;i<n;i++){
+            nums1[m+i]=nums2[i];
+        }
+        sort(nums1.begin(),nums1.begin()+m+n);
+    }
+};
+```
+#### 思路：
+先拷贝，再排序
+#### 复杂度分析：
+- 时间复杂度: O(NlogN)
+- 空间复杂度: O(1)
+
+### 2.双指针：
+```C++
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int p1 = m-1;
+        int p2 = n-1;
+        int p3 = m+n-1;
+        while(p1>=0&&p2>=0){
+            if(nums1[p1]<nums2[p2]) nums1[p3--] = nums2[p2--];
+            else nums1[p3--] = nums1[p1--]; 
+        }
+        if(p1<0) while(p2>=0) nums1[p3--] = nums2[p2--];
+        if(p2<0) while(p1>=0) nums1[p3--] = nums1[p1--];
+    }
+};
+```
+#### 思路：
+定义三个指针，从后往前比大小
+#### 复杂度分析：
+- 时间复杂度: O(n)
+- 空间复杂度: O(1)
+
+
+## 总结：
+1、快慢指针在数组和链表操作中非常好用，有两个，三个，从前开始，从后开始，快慢等等变体，灵活但是不好掌握
+
