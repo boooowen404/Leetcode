@@ -1,0 +1,52 @@
+# 题目地址：
+https://leetcode-cn.com/problems/linked-list-cycle/
+## 代码：
+### 1.贪心：
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res = 0;
+        if(prices.size()<=1) return 0;
+        for(int i=0;i<prices.size()-1;i++){
+            if(prices[i+1]-prices[i]>0) res+= prices[i+1]-prices[i];
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+只要股价上涨就交易，但是计算的过程其实并不是实际的交易过程，而是要比实际交易少，比如1 3 7计算中加了两次，实际交易只能一次，因为一天只能买或卖一次，但是计算结果是一样的
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+### 2.DP：
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size()<=1) return 0;
+        vector<int> dp(2,0);
+        dp[0] = 0;
+        dp[1] = -prices[0];
+        for(auto i:prices){
+            dp[0] = max(dp[1]+i,dp[0]);
+            dp[1] = max(dp[1],dp[0]-i);
+        }
+        return dp[0];
+    }
+};
+```
+#### 思路：
+用dp(2,0)表示当天持有和不持有股票的最大累计收益
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
+
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+## 总结：
+1、这个DP和打家劫舍很像，可以用两个数节省空间
+
