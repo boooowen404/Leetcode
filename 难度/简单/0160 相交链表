@@ -1,0 +1,36 @@
+# 题目地址：
+https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
+## 代码：
+### 1.双指针：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA==NULL||headB==NULL) return NULL;
+        ListNode* p1 = headA;
+        ListNode* p2 = headB;
+        while(p1!=p2){
+            if(p1==NULL) p1 = headB; else p1=p1->next;
+            if(p2==NULL) p2 = headA; else p2=p2->next;
+        }
+        return p1;
+    }
+};
+```
+#### 思路：
+如果存在环，那么快指针一定会追上慢指针，因为进入环后快慢指针每一次迭代距离都减少1
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、浪漫的双指针，确实想不到，普通操作用哈希表也可以
+
