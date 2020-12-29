@@ -1,0 +1,44 @@
+# 题目地址：
+https://leetcode-cn.com/problems/linked-list-cycle/
+## 代码：
+### 1.STL：
+```C++
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        return nums[nums.size()>>1];
+    }
+};
+```
+#### 思路：
+排序后中位数一定是多数元素，这是最简单的写法
+#### 复杂度分析：
+- 时间复杂度: O(NlogN)
+- 空间复杂度: O(1)
+### 2.投票法：
+```C++
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        if(nums.size()<=0) return 0;
+        int mode = nums[0];
+        int count = 0;
+        for(int i:nums){
+            if(count==0) mode = i;
+            if(mode==i) count++;
+            else count--;
+        }
+        return mode;
+    }
+};
+```
+#### 思路：
+给出现的数计数，如果出现一样的数，次数加一，否则次数减一，当次数为0时将众数更新，开始下一轮计数
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、哈希也可以做
+
