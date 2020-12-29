@@ -1,0 +1,37 @@
+# 题目地址：
+https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/
+## 代码：
+### 1.递归：
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums, int i, int j) {
+        if(i>j) return NULL;
+        int mid = (i+j)>>1;
+        TreeNode* p = new TreeNode(nums[mid]);
+        p->left = sortedArrayToBST(nums,i,mid-1);
+        p->right = sortedArrayToBST(nums,mid+1,j);
+        return p;
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        TreeNode* head = new TreeNode(0);
+        head = sortedArrayToBST(nums, 0, nums.size()-1);
+        return head;
+    }
+};
+```
+#### 思路：
+升序数组是二叉搜索树中序遍历的结果，所以头节点是数组中点，中点的不同划分方法就会导致不同的树结构
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
