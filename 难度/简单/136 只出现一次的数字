@@ -1,0 +1,25 @@
+# 题目地址：
+https://leetcode-cn.com/problems/single-number/submissions/
+## 代码：
+### 1.异或：
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res =nums[0];
+        for(int i=1;i<nums.size();i++){
+            res^=nums[i];
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+两个相同数的异或是0，0和一个数的异或是这个数本身，异或操作满足交换律
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、出其不意位运算，用哈希表也可以
+
