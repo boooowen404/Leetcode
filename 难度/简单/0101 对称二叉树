@@ -1,0 +1,38 @@
+# 题目地址：
+https://leetcode-cn.com/problems/symmetric-tree/
+## 代码：
+### 1.递归：
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root1, TreeNode* root2){
+        if(root1==NULL && root2==NULL) return true;
+        if(root1==NULL || root2==NULL) return false;
+        return root1->val==root2->val && isSymmetric(root1->left,root2->right)&&isSymmetric(root1->right,root2->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL) return true;
+        return isSymmetric(root->left, root->right);
+    }
+};
+```
+#### 思路：
+如果二叉树是对称，也就是镜像的，那么他的左子树和右子树互为镜像，也就是左子节点等于右子节点，且左子树的左子树和右子树的右子树互为镜像，左子树的右子树和右子树的左子树互为镜像
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+
+## 总结：
+1、这题官方题解给了return isSymmetric(root, root) 这样不用判空，但是会重复判断一遍
+2、递归的空间复杂度和递归深度有关，递归使用的是栈空间
+
