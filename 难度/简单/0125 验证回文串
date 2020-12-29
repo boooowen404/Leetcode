@@ -1,0 +1,26 @@
+# 题目地址：
+https://leetcode-cn.com/problems/valid-palindrome/
+## 代码：
+### 1.STL：
+```C++
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        string str;
+        for(auto i:s){
+            if(isalnum(i)) str+=tolower(i);
+        }
+        string str_rev(str.rbegin(), str.rend());
+        return str==str_rev;
+    }
+};
+```
+#### 思路：
+思路很简单，主要看STL操作，这里面设计string的拷贝构造，判断字符，字符大小写转换
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+也可以用双指针，不过更麻烦
+
