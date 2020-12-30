@@ -1,0 +1,21 @@
+# 题目地址：
+https://leetcode-cn.com/problems/ugly-number/
+## 代码：
+### 1.暴力：
+```C++
+class Solution {
+public:
+    bool isUgly(int num) {
+        if(num==0) return false;
+        while(num%2==0) num/=2;
+        while(num%3==0) num/=3;
+        while(num%5==0) num/=5;
+        return num==1;
+    }
+};
+```
+#### 思路：
+除就完事了
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
