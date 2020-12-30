@@ -1,0 +1,32 @@
+# 题目地址：
+https://leetcode-cn.com/problems/invert-binary-tree/
+## 代码：
+### 1.递归：
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL) return root;
+        TreeNode* temp;
+        temp = invertTree(root->right);
+        root->right = invertTree(root->left);
+        root->left = temp;
+        return root;
+    }
+};
+```
+#### 思路：
+需要注意不能直接左等于右，右等于左，需要一个临时变量
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
