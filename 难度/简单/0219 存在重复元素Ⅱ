@@ -1,0 +1,28 @@
+# 题目地址：
+https://leetcode-cn.com/problems/contains-duplicate-ii/
+## 代码：
+### 1.散列表：
+```C++
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        if(nums.size()<=1 || k<=0) return false; 
+        unordered_map<int,int> mp;
+        for(int i =0;i<nums.size();i++){
+            if(mp.find(nums[i])==mp.end()){
+                mp[nums[i]] = i;
+            }
+            else{
+                if(i-mp[nums[i]]<=k) return true;
+                else mp[nums[i]]=i;
+            }
+        }
+        return false;
+    }
+};
+```
+#### 思路：
+从头遍历数组，维护一个<int,int>的unordered_map，值为下标，键位下标值，找到重复元素时就判断是否相距小于k，否就更新下标值，因为后面的相同元素肯定离这个新遇到的更近
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
