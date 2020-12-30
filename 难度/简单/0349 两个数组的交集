@@ -1,0 +1,58 @@
+# 题目地址：
+https://leetcode-cn.com/problems/intersection-of-two-arrays/
+## 代码：
+### 1.哈希表：
+```C++
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        if(nums1.empty() or nums2.empty()) return res;
+        unordered_set<int> s;
+        for(int i:nums1){
+            if(s.find(i)==s.end()) s.insert(i);
+        }
+        for(int i:nums2){
+            if(s.find(i)!=s.end()){
+                res.push_back(i);
+                s.erase(i);
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+注意遍历第二个数组时，加入元素后要把哈希表中的元素去掉，避免重复添加
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
+### 2.相同元素不唯一时：
+```C++
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        if(nums1.empty() or nums2.empty()) return res;
+        unordered_map<int,int> s;
+        for(int i:nums1){
+            if(s.find(i)==s.end()) s.insert(make_pair(i,1));
+            else s[i]++;
+        }
+        for(int i:nums2){
+            if(s.find(i)!=s.end()){
+                if(s[i]>0) res.push_back(i);
+                s[i]--;
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+用map存储相同数的个数
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+
