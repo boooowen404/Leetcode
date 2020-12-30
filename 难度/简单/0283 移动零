@@ -1,0 +1,63 @@
+# 题目地址：
+https://leetcode-cn.com/problems/move-zeroes/
+## 代码：
+### 1.双指针：
+```C++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        if(nums.size()<=1) return;
+        int i=0;
+        int j=0;
+        while(j<nums.size()){
+           while(nums[i]!=0) {
+               i++;
+               if(i>=nums.size()) return;
+           }
+           while(nums[j]==0){
+               j++;
+               if(j>=nums.size()) return;
+           }
+            if(i<j){
+                nums[i] = nums[j];
+                nums[j] = 0;
+            }
+            else j++;
+        }
+    }
+};
+```
+#### 思路：
+左指针指向零元素，右指针指向非零元素，从左向右遍历，如果左在右右边，那证明左的左边已经没有零了，此时不能交换，把右右移，如果左右顺序正常，那么交换值，直到右到头或者左到头
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+### 2.改进：
+```C++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        if(nums.size()<=1) return;
+        int i=0;
+        int j=0;
+        while(j<nums.size()){
+            if(nums[j]!=0){
+                swap(nums[i],nums[j]);
+                i++;
+            }
+            j++;
+        }
+    }
+};
+```
+#### 思路：
+左指针指向已经弄好的元素的右边，只要右指针碰到非零值，就交换，这样左边全是非零值，还没有破坏顺序
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+
+
+## 总结：
+1、第一种解法的数组老是超限，原因就是没有把判断超出放到++的后面
+
