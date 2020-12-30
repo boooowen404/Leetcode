@@ -1,0 +1,63 @@
+# 题目地址：
+https://leetcode-cn.com/problems/implement-queue-using-stacks/
+## 代码：
+### 1.辅助栈：
+```C++
+class MyQueue {
+public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        sta.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if(stainv.empty()){
+            while(!sta.empty()){
+                stainv.push(sta.top());
+                sta.pop();
+            }
+        }
+        int temp = stainv.top();
+        stainv.pop();
+        return temp;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        if(stainv.empty()){
+            while(!sta.empty()){
+                stainv.push(sta.top());
+                sta.pop();
+            }
+        }
+       return stainv.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return sta.empty()&&stainv.empty();
+    }
+    stack<int> sta;
+    stack<int> stainv;
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
+```
+#### 思路：
+在查看队列头时将栈里的元素全度弹出到辅助栈里，辅助栈里的元素满足队列特点
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
