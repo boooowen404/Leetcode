@@ -1,0 +1,73 @@
+# 题目地址：
+https://leetcode-cn.com/problems/remove-linked-list-elements/
+## 代码：
+### 1.哨兵节点：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(head==NULL) return head;
+        ListNode* p = new ListNode(-1);
+        p->next = head;
+        ListNode* pre = p;
+        while(head!=NULL){
+            if(head->val == val){
+                pre->next = head->next;
+            }
+            else{
+                pre = head;
+            }
+            head = head->next;
+        }
+        return p->next;
+    }
+};
+```
+#### 思路：
+用哨兵节点避免判断头节点的值
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+### 2.防止内存泄漏：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(head==NULL) return head;
+        ListNode* p = new ListNode(-1);
+        p->next = head;
+        ListNode* pre = p;
+        while(head!=NULL){
+            if(head->val == val){
+                pre->next = head->next;
+                delete head;
+            }
+            else{
+                pre = head;
+            }
+            head = pre->next;
+        }
+        return p->next;
+    }
+};
+```
+#### 思路：
+释放掉需要删除的节点内存，但是会拖慢运行速度，显示内存还变多了。。。不知道为啥
+
