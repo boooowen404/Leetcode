@@ -1,0 +1,70 @@
+# 题目地址：
+https://leetcode-cn.com/problems/house-robber/
+## 代码：
+### 1.DP：
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        if(nums.size() == 1) return nums[0];
+        vector<int> dp(nums.size(),0);
+        dp[0] = nums[0];
+        dp[1] = max(nums[0],nums[1]); 
+        for(int i =2;i<nums.size();i++){
+            dp[i] = max(dp[i-2]+nums[i], dp[i-1]);
+        }
+        return dp[nums.size()-1];
+    }
+};
+```
+#### 思路：
+用dp[i]表示打劫到下标i家时的最大收益，递推公式是dp[i] = max(dp[i-2]+nums[i], dp[i-1])
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
+### 2.DP改进：
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        if(nums.size() == 1) return nums[0];
+        vector<int> dp(nums.size(),0);
+        int dp0 = nums[0];
+        int dp1 = max(nums[0],nums[1]); 
+        for(int i =2;i<nums.size();i++){
+            int temp = dp1;
+            dp1 = max(dp0+nums[i], dp1);
+            dp0 = temp;
+        }
+        return dp1;
+    }
+};
+```
+#### 思路：
+递推公式可以看出当前值只和前两个值有关，所以只用这两个值，再实时更新即可
+
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+### 3.写法改进：
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int pre = 0;
+        int curr = 0; 
+        for(int i:nums){
+            int temp = curr;
+            curr = max(pre+i, curr);
+            pre = temp;
+        }
+        return curr;
+    }
+};
+```
+#### 思路：
+用这种遍历方式可以不访问数组下标，避免溢出
+
