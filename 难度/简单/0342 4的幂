@@ -1,0 +1,24 @@
+# 题目地址：
+https://leetcode-cn.com/problems/power-of-four/
+## 代码：
+### 1.递归：
+```C++
+class Solution {
+public:
+    bool isPowerOfFour(int n) {
+        if(n==0) return false;
+        if(n==1) return true;
+        if(n%4!=0) return false;
+        return isPowerOfFour(n>>2);
+    }
+};
+```
+#### 思路：
+这题要注意边界条件，0的情况，1的情况
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、这题的方法很多，迭代，递归，还有一些其他方法
+
