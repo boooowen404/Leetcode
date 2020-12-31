@@ -1,0 +1,37 @@
+# 题目地址：
+https://leetcode-cn.com/problems/shortest-distance-to-a-character/
+## 代码：
+### 1.左右遍历：
+```C++
+class Solution {
+public:
+    vector<int> shortestToChar(string S, char C) {
+        int p = -1;
+        vector<int> res;
+        vector<int> left(S.size(),0);
+        for(int i =0;i<S.size();i++)
+        {
+            if(S[i]==C) p = i;
+            if(p==-1) left[i] = INT_MAX;
+            else{
+                left[i] = i-p;
+            }
+        }
+        vector<int> right(S.size(),0);
+        p=-1;
+        for(int i =S.size()-1;i>=0;i--){
+            if(S[i]==C) p= i;
+            if(p==-1) right[i] = left[i];
+            else{
+                right[i]=min(left[i], p-i);
+            }
+        } 
+        return right;
+    }
+};
+```
+#### 思路：
+从左往右遍历计算一次距离，再从右往左计算一次距离，取更小值即为最小值，比较的过程可以放在第二次遍历
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
