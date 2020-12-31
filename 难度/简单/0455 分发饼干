@@ -1,0 +1,30 @@
+# 题目地址：
+https://leetcode-cn.com/problems/assign-cookies/
+## 代码：
+### 1.快慢指针：
+```C++
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        if(g.empty() or s.empty()) return 0;
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
+        int res = 0;
+        int i=0;
+        int j =0;
+        while(i<s.size()&&j<g.size()){
+            if(s[i]>=g[j]){
+                res++;
+                j++;
+            }
+            i++;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+贪心
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
