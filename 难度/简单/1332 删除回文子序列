@@ -1,0 +1,21 @@
+# 题目地址：
+https://leetcode-cn.com/problems/remove-palindromic-subsequences/
+## 代码：
+### 1.三种情况：
+```C++
+class Solution {
+public:
+    int removePalindromeSub(string s) {
+        if(s.empty()) return 0;
+        string temp = s;
+        reverse(s.begin(),s.end());
+        if(temp==s) return 1;
+        return 2;
+    }
+};
+```
+#### 思路：
+注意审题呀，回文子序列不是回文串，这题总共就012三种情况
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
