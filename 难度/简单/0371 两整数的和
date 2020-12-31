@@ -1,0 +1,25 @@
+# 题目地址：
+https://leetcode-cn.com/problems/sum-of-two-integers/
+## 代码：
+### 1.位操作 递归：
+```C++
+class Solution {
+public:
+    int getSum(int a, int b) {
+        if(!(a&b)) return a^b;
+        return getSum(a^b, ((unsigned int)(a&b))<<1);
+    }
+};
+
+```
+#### 思路：
+a^b 得到不进位的加法结果，a&b<<1得到进的位，递归直到进的位为0，结果就是a^b
+特别需要注意的是a&b==0 (a&b)==0这两个表达式的计算结果是不一样的，因为左移右移优先级高于判断，但是按位与、按位或、按位异或 优先级低于判断
+unsigned int是为了在负数时防止左移溢出
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+## 总结：
+1、快慢指针还可以用来寻找链表的中间节点，在已排序的数组中也经常能用到
+
