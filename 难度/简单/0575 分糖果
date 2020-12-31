@@ -1,0 +1,22 @@
+# 题目地址：
+https://leetcode-cn.com/problems/distribute-candies/
+## 代码：
+### 1.哈希表：
+```C++
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        if(candyType.empty()) return 0;
+        unordered_set<int> s;
+        for(auto i:candyType){
+            s.insert(i);
+        }
+        return min(s.size(),candyType.size()>>1);
+    }
+};
+```
+#### 思路：
+哈希表，最大值length/2
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
