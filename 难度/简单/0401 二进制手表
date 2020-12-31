@@ -1,0 +1,38 @@
+# 题目地址：
+https://leetcode-cn.com/problems/binary-watch/
+## 代码：
+### 1.从时间来算：
+```C++
+class Solution {
+public:
+    int count1(int n){
+        int res = 0;
+        while(n!=0){
+            n=n&(n-1);
+            res++;
+        }
+        return res;
+    }
+    vector<string> readBinaryWatch(int num) {
+        vector<string> res;
+        for(int i=0;i<12;i++){
+            for(int j= 0;j<60;j++){
+                if(count1(i)+count1(j)==num){
+                    res.push_back(to_string(i) + ":" + (j>=10 ? to_string(j) : ("0"+to_string(j))) );
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+这个解法的巧妙之处就在于没有按照题目给的意思按部就班的从个数去算，而是反过来。。反正时间就那么多
+#### 复杂度分析：
+- 时间复杂度: O(1)
+- 空间复杂度: O(1)
+
+
+## 总结：
+1、反转思路，柳暗花明
+
