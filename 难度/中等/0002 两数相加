@@ -1,0 +1,56 @@
+# 题目地址：
+https://leetcode-cn.com/problems/add-two-numbers/
+## 代码：
+### 1.进位：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        if(l1==NULL) return l2;
+        if(l2==NULL) return l1;
+        int stepin = 0;
+        ListNode* p = new ListNode(0);
+        ListNode* head = p;
+        while(l1!=NULL||l2!=NULL){
+            int l1val = l1==NULL?0:l1->val;
+            int l2val = l2==NULL?0:l2->val;
+            l1=l1==NULL?l1:l1->next;
+            l2=l2==NULL?l2:l2->next;
+            int val = (l1val+l2val+stepin)%10;
+            if(l1val+l2val+stepin>=10){
+                stepin = 1;
+            }
+            else stepin = 0;
+            ListNode* temp = new ListNode(val);
+            p->next = temp;
+            p=p->next;
+        }
+        if(stepin==1){
+            ListNode* temp = new ListNode(1);
+            p->next = temp;
+            p=p->next;
+        }
+        return head->next;
+    }
+};
+```
+#### 思路：
+主要是注意写对进位，最后一个如果还要进位要新增一个1，用了一个哨兵节点
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+
+## 总结：
+1、这种题就是写法稍微复杂一点，思路就是简单思路
+
