@@ -1,0 +1,86 @@
+# 题目地址：
+https://leetcode-cn.com/problems/walking-robot-simulation/
+## 代码：
+### 1.模拟：
+```C++
+class Solution {
+public:
+    int distance(const vector<int>& pos){
+        return pos[0]*pos[0]+pos[1]*pos[1];
+    }
+    bool obstacle(const vector<vector<int>>& obstacles, const vector<int>& pos){
+        for(auto obs:obstacles){
+            if(obs[0]==pos[0]&&obs[1]==pos[1]) return true;
+        }
+        return false;
+    }
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        vector<int> pos(2,0);//初始坐标
+        vector<vector<int>> direction = {{0,1},{1,0},{0,-1},{-1,0}}; //上右下左
+        int dir = 0;//初始向北，也就是初始向上，范围 0到3
+        int res = 0;
+        for(int c:commands){
+            if(c==-1) dir = dir==3?0:dir+1;
+            if(c==-2) dir = dir==0?3:dir-1;
+            if(c>=1&&c<=9){
+                for(int i =0;i<c;i++){
+                    pos[0]+=direction[dir][0];
+                    pos[1]+=direction[dir][1];
+                    if(obstacle(obstacles,pos)){
+                        pos[0]-=direction[dir][0];
+                        pos[1]-=direction[dir][1];
+                        break;
+                    }
+                }
+                res = max(res,distance(pos));
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+直接模拟，在判断是否遇到障碍物时直接遍历障碍物数组，这个思路超时了
+#### 复杂度分析：
+- 时间复杂度: O(N*K*M)其中N是命令个数，K是每条命令走的步数，M是障碍物个数
+- 空间复杂度: O(1)
+### 2.哈希表：
+```C++
+class Solution {
+public:
+    int distance(const vector<int>& pos){
+        return pos[0]*pos[0]+pos[1]*pos[1];
+    }
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        vector<int> pos(2,0);//初始坐标
+        vector<vector<int>> direction = {{0,1},{1,0},{0,-1},{-1,0}}; //上右下左
+        set<pair<int,int>> st;
+        for(auto i:obstacles) st.insert(make_pair(i[0],i[1]));
+        int dir = 0;//初始向北，也就是初始向上，范围 0到3
+        int res = 0;
+        for(int c:commands){
+            if(c==-1) dir = dir==3?0:dir+1;
+            if(c==-2) dir = dir==0?3:dir-1;
+            if(c>=1&&c<=9){
+                for(int i =0;i<c;i++){
+                    pos[0]+=direction[dir][0];
+                    pos[1]+=direction[dir][1];
+                    if(st.find(make_pair(pos[0],pos[1]))!=st.end()){
+                        pos[0]-=direction[dir][0];
+                        pos[1]-=direction[dir][1];
+                        break;
+                    }
+                }
+                res = max(res,distance(pos));
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+坑是官方题解里用了unordered_set<pair<int,int>> 无法通过编译，得自己写hash函数，用set就可以，原因是set是红黑树，不需要预先定义的hash函数
+#### 复杂度分析：
+- 时间复杂度: O(N*K)
+- 空间复杂度: O(M)
+
