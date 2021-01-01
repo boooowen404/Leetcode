@@ -1,0 +1,25 @@
+# 题目地址：
+https://leetcode-cn.com/problems/shift-2d-grid/
+## 代码：
+### 1.模拟：
+```C++
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL or head->next == NULL) return false;
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast!=NULL and fast->next!= NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+};
+```
+#### 思路：
+理解题意，然后按照给定的步骤模拟，这里有一个优化就是m*n次迁徙后会得到完全一样的网格，官方解题给了个什么取模运算，把复杂度降到m*n，太复杂没看。。。
+#### 复杂度分析：
+- 时间复杂度: O(M*N*K)
+- 空间复杂度: O(1)
