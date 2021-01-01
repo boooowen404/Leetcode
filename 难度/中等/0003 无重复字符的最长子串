@@ -1,0 +1,51 @@
+# 题目地址：
+https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+## 代码：
+### 1.哈希表：
+```C++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res=0;
+        unordered_map<char,int> mp;
+        int index = -1;
+        for(int i =0;i<s.size();i++){
+            if(mp.find(s[i])==mp.end()){
+                mp[s[i]] = i;
+            }
+            else{
+                index = index>mp[s[i]]?index:mp[s[i]];
+                mp[s[i]] = i;
+            }
+            res = res>=i-index?res:i-index;
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+刚开始以为直接维护一个set,求最大size()即可，然后发现这样求的是子序列而不是子串，然后想到子串的话遇到重复的就清空set重新计数，发现这样也不行，因为两个重复字符之间还可能有一些字符，例如
+abacd,最长是4，如果重新计数只能算出3，然后我又想到可以用map来存下标，遇到重复的就从重复的那个后面开始算，这样就不能用size来求大小，所以想到用index存下最近找到的重复字符，注意，需要在
+更新index的时候判断是不是最大的，如果少了这一步会导致计算到前面的重复字符
+
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
+### 2.写法改进：
+```C++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res = 0;
+        unordered_map<char,int> mp;
+        int index = -1;
+        for(int i =0;i<s.size();i++){
+            if(mp.find(s[i])!=mp.end()) index = max(index,mp[s[i]]);
+            mp[s[i]] = i;
+            res = max(res,i-index);
+        }
+        return res;
+    }
+};
+```
