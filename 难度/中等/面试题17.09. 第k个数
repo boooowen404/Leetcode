@@ -1,0 +1,27 @@
+# 题目地址：
+https://leetcode-cn.com/problems/get-kth-magic-number-lcci/
+## 代码：
+### 1.DP：
+```C++
+class Solution {
+public:
+    int getKthMagicNumber(int k) {
+        vector<int> dp(k,0);
+        dp[0] = 1;
+        int p3=0,p5=0,p7=0;
+        for(int i=1;i<k;i++) {
+            dp[i] = min(min(dp[p3]*3,dp[p5]*5),dp[p7]*7);
+            if(dp[i]==dp[p3]*3) p3++;
+            if(dp[i]==dp[p5]*5) p5++;
+            if(dp[i]==dp[p7]*7) p7++;
+        }
+        return dp[k-1];
+    }
+};
+```
+#### 思路：
+dp[i]表示第i小的数，其实就是3*a+5*b+7*c形式的数，用三个指针代表*3*5*7三个数列，其实就是三个数列依次取小合并，这个题解里说的很清楚
+https://leetcode-cn.com/problems/get-kth-magic-number-lcci/solution/di-k-ge-shu-jiu-shi-xiang-bu-tong-wei-he-san-zhi-z/
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(N)
