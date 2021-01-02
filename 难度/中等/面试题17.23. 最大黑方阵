@@ -1,0 +1,79 @@
+# 题目地址：
+https://leetcode-cn.com/problems/max-black-square-lcci/
+## 代码：
+### 1.模拟：
+```C++
+class Solution {
+public:
+    bool fit(const vector<vector<int>>& matrix, const int left, const int right, const int size){
+        if(size==1) return true;
+        if(left+size>matrix.size() || right+size>matrix.size()) return false;
+        for(int i = 1;i<size;i++){
+            if(matrix[left+i][right]!=0) return false;
+        }
+        for(int i = 1;i<size;i++){
+            if(matrix[left][right+i]!=0) return false;
+        }
+        for(int i = 1;i<size;i++){
+            if(matrix[left+i][right+size-1]!=0) return false;
+        }
+        for(int i = 1;i<size;i++){
+            if(matrix[left+size-1][right+i]!=0) return false;
+        }
+        return true;
+    }
+    vector<int> findSquare(vector<vector<int>>& matrix) {
+        vector<int> res;
+        if(matrix.empty() || matrix[0].empty()) return res;
+        int length = matrix.size();
+        int size = 0;
+        int left = 0;
+        int right = 0;
+        for(int i=0;i<length;i++){
+            for(int j=0;j<length;j++){
+                if(matrix[i][j]!=0) continue;
+                int temp_size = size;
+                while(temp_size<=length){
+                    if(fit(matrix,i,j,temp_size)){
+                        if(size==temp_size){
+                            if(i<left){
+                                left = i;
+                                right = j;
+                            }
+                            else if(i==left){
+                                if(j<right){
+                                    left = i;
+                                    right = j;                                    
+                                }
+                            }
+                        }
+                        else{
+                            size=temp_size;
+                            left = i;
+                            right = j;
+                        }
+                    }
+                    temp_size++;
+                }
+            }
+        } 
+        if(size!=0){
+            res.push_back(left);
+            res.push_back(right);
+            res.push_back(size);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+遍历矩阵中的每个点，如果不是黑直接下一个，如果是黑，启动判断函数，从当前记录的最大尺寸开始判断，如果尺寸相同坐标满足要求那么更新坐标，如果尺寸更大那么更新尺寸和坐标；判断函数就是遍历四条边，遇到
+不是黑的就返回。
+#### 复杂度分析：
+- 时间复杂度: O(N^3)
+- 空间复杂度: O(1)
+
+
+## 总结：
+1、题解里有人用重构矩阵或者DP，其实时间复杂度没有优化，基本思路都是一致的
+
