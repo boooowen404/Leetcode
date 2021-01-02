@@ -1,0 +1,171 @@
+# 题目地址：
+https://leetcode-cn.com/problems/longest-palindromic-substring/
+## 代码：
+### 1.中心拓展：
+```C++
+class Solution {
+public:
+    string findstrmid(string s, int i){
+        int left = i, right = i;
+        string res;
+        while(left>=0&&right<s.size()){
+            if(s[left]==s[right]){
+                left--;
+                right++;
+            }
+            else break;
+        }
+        for(int i=left+1;i<=right-1;i++)
+        {
+            res.push_back(s[i]);
+        }
+        return res;
+    }
+    string findstrl(string s, int i){
+        int left = i-1, right = i;
+        string res;
+        if(i-1<0) return res;
+        while(left>=0&&right<s.size()){
+            if(s[left]==s[right]){
+                left--;
+                right++;
+            }
+            else break;
+        }
+        for(int i=left+1;i<=right-1;i++)
+        {
+            res.push_back(s[i]);
+        }
+        return res;
+    }
+        string findstrr(string s, int i){
+        int left = i, right = i+1;
+        string res;
+        if(i+1>=s.size()) return res;
+        while(left>=0&&right<s.size()){
+            if(s[left]==s[right]){
+                left--;
+                right++;
+            }
+            else break;
+        }
+        for(int i=left+1;i<=right-1;i++)
+        {
+            res.push_back(s[i]);
+        }
+        return res;
+    }
+    string longestPalindrome(string s) {
+        string res;
+        int size = 0;
+        for(int i = 0;i!=s.size();i++){
+            string tempmid = findstrmid(s,i);
+            string templ=    findstrl(s,i);
+            string tempr=    findstrr(s,i);
+            int maxlength = max(max(tempmid.size(),templ.size()),tempr.size());
+            string temp;
+            if(tempmid.size()==maxlength) temp = tempmid;
+            if(tempr.size()==maxlength) temp = tempr;
+            if(templ.size()==maxlength) temp = templ;
+            if(temp.size()>size){
+                res = temp;
+                size = temp.size();
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+刚开始想以一个字符为中心向两边拓展，找到以该字符为中心的最长回文子串，然后遍历string找到最长的即可。。。但是忽略了两个一样的这种，才发现回文子串不一定以一个字符为中心，所以
+为了修补加上了以左边为中心，以右边为中心的，最后看三个结果哪个最长。。。orz写的好麻烦
+#### 复杂度分析：
+- 时间复杂度: O(N^2)
+- 空间复杂度: O(N)
+### 2.中心拓展改进：
+```C++
+class Solution {
+public:
+    string findstr(string s, int i,int j){
+        int left = i, right = j;
+        string res;
+        while(left>=0&&right<s.size()){
+            if(s[left]==s[right]){
+                left--;
+                right++;
+            }
+            else break;
+        }
+        for(int i=left+1;i<=right-1;i++)
+        {
+            res.push_back(s[i]);
+        }
+        return res;
+    }
+    string longestPalindrome(string s) {
+        string res;
+        int size = 0;
+        for(int i = 0; i!=s.size();i++){
+            string temp1 = findstr(s,i,i);   
+            string temp2 = findstr(s,i,i+1);
+            string temp = temp1.size()>=temp2.size()?temp1:temp2;           
+            if(temp.size()>size){
+                res = temp;
+                size = temp.size();
+            }
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+上一个写法其实是重复判断了一次，完全可以用一个函数，给left和right赋不同的值
+#### 复杂度分析：
+- 时间复杂度: O(N^2)
+- 空间复杂度: O(N)
+### 3.动态规划：
+```C++
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.size()<2) return s;
+        string res;
+        vector<bool> temp(s.size(),false);
+        vector<vector<bool>> dp(s.size(),temp);
+        dp[0][0] = true;
+        int maxlen = 1;
+        int start = 0;
+        for(int i = 0;i<s.size();i++){
+            dp[i][i] = true;
+        }
+        for(int j = 1;j<s.size();j++){
+            for(int i = 0;i<j;i++){
+        //for(int i = 0;i<s.size()-1;i++){
+        //    for(int j = i+1;j<s.size();j++){
+                if(s[i]!=s[j]) dp[i][j]=false;
+                else{
+                    if(j-i<3) dp[i][j] = true;
+                    else dp[i][j] = dp[i+1][j-1];
+                    if(dp[i][j]&&j-i+1>maxlen){
+                        maxlen = j-i+1;
+                        start = i;
+                    }
+                }
+            }
+        }
+        for(int i = 0;i<maxlen;i++){
+            res.push_back(s[i+start]);
+        }
+        return res;
+    }
+};
+```
+#### 思路：
+用dp[i][j]表示区间是否是回文串，闭区间，注意上面注释里的填数顺序不对，所以结果不对
+#### 复杂度分析：
+- 时间复杂度: O(N^2)
+- 空间复杂度: O(N)
+
+## 总结：
+1、填数顺序。。DP里还是要非常注意这一点的
+
