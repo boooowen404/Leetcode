@@ -1,0 +1,42 @@
+# 题目地址：
+https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+## 代码：
+### 1.快慢指针：
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        ListNode* pre = slow;
+        while(n>0){
+            fast = fast->next;
+            n--;
+        }
+        while(fast!=NULL){
+            fast = fast->next;
+            pre = slow;
+            slow = slow->next;
+        }
+        if(slow == head) return slow->next;
+        pre->next = slow->next;
+        return head;
+    }
+};
+```
+#### 思路：
+需要注意如果删除的是头节点需要判断一下
+#### 复杂度分析：
+- 时间复杂度: O(N)
+- 空间复杂度: O(1)
+
