@@ -1,0 +1,46 @@
+# 题目地址：
+https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/
+## 代码：
+### 1.回溯：
+```C++
+class Solution {
+public:
+    vector<string> res;
+    vector<string> letterCombinations(string digits) {
+        if(digits.size()==0) return res;
+        unordered_map<int, string> mp;
+        mp[2] = "abc";
+        mp[3] = "def";
+        mp[4] = "ghi";
+        mp[5] = "jkl";
+        mp[6] = "mno";
+        mp[7] = "pqrs";
+        mp[8] = "tuv";
+        mp[9] = "wxyz";
+        string temp;
+        backtrick(digits, temp,0, mp);
+        return res;
+    }
+    void backtrick(string &digits, string ans, int index, const unordered_map<int, string> &mp){
+        if(index == digits.size()){
+            res.push_back(ans);
+            return;
+        }
+        string word = mp.at(digits[index]-'0');
+        for(int i = 0;i<word.size();i++){
+            ans.push_back(word[i]);
+            backtrick(digits, ans, index+1,mp);
+            ans.pop_back();
+        }
+        return;
+    }
+};
+```
+#### 思路：
+求所有可能的问题适用回溯算法，比如八皇后，数独，回溯和其他算法比起来，代码不是很直观，所以不好理解，但是其实有几个关键点：第一找到要做什么，这题就是要拿一个字母放到string里，第二找约束，也就是
+满足条件的解，这题不用，第三是找返回条件，也就是到达给定的数字中点时返回；回溯思想在代码里体现在循环里的递归那块，先push，递归完再pop，其实就是“回到上一个”，很难理解
+
+## 总结：
+1、回溯代码可以分为几个做题步骤，找到循环，确定里面应该有什么操作，找到递归函数的参数，找到约束，找到终止条件；
+2、回溯往往用全局变量，在回溯的同时往里写东西
+
