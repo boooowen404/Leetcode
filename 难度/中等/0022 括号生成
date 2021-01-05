@@ -1,0 +1,38 @@
+# 题目地址：
+https://leetcode-cn.com/problems/generate-parentheses/
+## 代码：
+### 1.回溯：
+```C++
+class Solution {
+public:
+    vector<string> res;
+    void backtrick(int n, vector<string> &res, int left,int right, string &temp){
+        if(left == n && right==n){
+            res.push_back(temp);
+            return;
+        }
+        if(left>n || right>n) return;
+        if(left<n){
+            temp.push_back('(');
+            backtrick(n,res,left+1,right,temp);
+            temp.pop_back();
+        }
+        if(right<n&&right<left){
+            temp.push_back(')');
+            backtrick(n,res,left,right+1,temp);
+            temp.pop_back();
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        if(n<=0) return {};
+        string temp;
+        backtrick(n, res, 0,0, temp);
+        return res;
+    }
+};
+```
+#### 思路：
+依然是回溯，这题就有约束了，加入约束，其他和电话号码的字母组合一样
+#### 复杂度分析：
+- 时间复杂度: O(https://leetcode-cn.com/problems/generate-parentheses/solution/gua-hao-sheng-cheng-by-leetcode-solution/) 什么几把玩意，太长不看
+- 空间复杂度: O(N) 递归的空间复杂度取决于递归栈的深度
