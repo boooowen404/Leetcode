@@ -1,0 +1,49 @@
+# 题目地址：
+https://leetcode-cn.com/problems/divide-two-integers/
+## 代码：
+### 1.位操作：
+```C++
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend==0||divisor==0) return 0;
+        bool neg = false;
+        long long a = dividend;
+        long long b = divisor;
+        if(divisor==1) return dividend;
+        if(divisor==-1) {
+            if(dividend==INT_MIN) return INT_MAX;
+            else return -dividend;
+        }
+        if((a>0&&b<0) || (a<0&&b>0)){
+            neg=true;
+        }
+        a=a>=0?a:-a;
+        b=b>=0?b:-b;
+        if(a==b) return neg==false?1:-1;
+        int res = div(a,b);
+        if(neg==false) return res>INT_MAX?INT_MAX:res;
+        return -res;
+    }
+    int div(long a, long b){
+        if(a<b) return 0;
+        if(a==b) return 1;
+        long count = 1;
+        long tb = b;
+        while(tb<<1<=a){
+            count = count<<1;
+            tb=tb<<1;
+        }
+        return count+div(a-tb,b);
+    }
+
+};
+```
+#### 思路：
+基本思路就是看这个数里包含了多少个第二个数，正常一次一次看，位操作可以一直翻倍看
+先转换成整数再操作，难点其实是边界，也就是负数的时候，这里div函数里面count和tb如果不用long是会报错的，左移着左移着就变成了负数
+这题真是把我恶心到了。。。
+#### 复杂度分析：
+- 时间复杂度: O(logN)
+- 空间复杂度: O(logN)
+
